@@ -1,0 +1,52 @@
+@import './../../../../theme';
+
+.mat-title {
+	font-size: 24px;
+	font-weight: 400;
+}
+
+.mat-card-actions,
+.mat-card-content,
+.mat-card-subtitle,
+.mat-card-title {
+	display: block;
+	margin-bottom: 0px;
+}
+
+.mat-small.mag-subtitle {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.textstyled-button {
+	border: none;
+	padding: 0;
+	background: none;
+}
+
+.textstyled-button /deep/ .mat-button-focus-overlay {
+	background-color: transparent !important;
+}
+
+.mag-icon-gray {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.icon-mahn-stufe1 {
+	color: #FFEB3B;
+}
+
+.icon-mahn-stufe2 {
+	color: #FF9800;
+}
+
+.icon-mahn-stufe3 {
+	color: #D32F2F;
+}
+
+.icon-status-ausstehend {
+	color: #D32F2F;
+}
+
+.icon-status-bezahlt {
+	color: #388E3C;
+}

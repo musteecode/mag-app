@@ -1,0 +1,62 @@
+<div layout="column" layout-fill>
+	<mat-toolbar class="mat-elevation-z24 bgc-dark-grey-B15">
+		<span class="app-name text-upper">Mag</span>
+		<span class="app-title">App</span>
+	</mat-toolbar>
+	<div class="md-content bgc-dark-grey-B30" layout-padding flex>
+		<div layout-gt-xs="row" layout-align-gt-xs="center start" class="margin">
+			<div flex-gt-xs="50">
+				<mat-card tdMediaToggle="gt-xs" [mediaClasses]="['push-top-lg']" class="mat-elevation-z5">
+					<mat-card-title class="theme-background theme-color">Anmeldung</mat-card-title>
+					<mat-card-subtitle class="theme-background theme-color">Melde dich mit deinem Firmenkonto an</mat-card-subtitle>
+					<mat-divider></mat-divider>
+					<mat-card-content>
+						<form #loginForm="ngForm">
+							<div layout="row">
+								<mat-form-field flex>
+									<input matInput #userElement #userControl="ngModel" placeholder="Benutzername" type="text" [attr.maxlength]="userNameMaxLength"
+									    name="username" [(ngModel)]="username" (focus)="clearError(userElement)" required>
+									<span md-prefix>
+										<mat-icon>person</mat-icon>
+									</span>
+									<mat-hint align="start">
+										<span [hidden]="!userControl.errors?.required || userControl.pristine" class="tc-red-600">Benutzername ist erforderlich</span>
+									</mat-hint>
+									<mat-hint align="end">{{userElement.value.length}} / {{userNameMaxLength}}</mat-hint>
+								</mat-form-field>
+							</div>
+							<div layout="row">
+								<mat-form-field flex>
+									<input matInput #passElement #passControl="ngModel" placeholder="Kennwort" type="password" name="password" [(ngModel)]="password"
+									(focus)="clearError(passElement)" required>
+									<span md-prefix>
+										<mat-icon>lock</mat-icon>
+									</span>
+									<mat-hint align="start">
+										<span [hidden]="!passControl.errors?.required || passControl.pristine" class="tc-red-600">Kennwort ist erforderlich</span>
+									</mat-hint>
+									<mat-hint align="end">wähle ein komplexes passwort</mat-hint>
+								</mat-form-field>
+							</div>
+							<div layout="row" *ngIf="error?.message.length > 0" [@tdFadeInOut]="error?.message.length > 0" class="mat-small">
+								<p class="tc-red-600">{{error.message}}</p>
+								<!-- <p class="tc-red-600">{{error.code}} <br> {{error.message}}</p> -->
+							</div>
+						</form>
+					</mat-card-content>
+					<mat-divider></mat-divider>
+					<mat-card-actions layout="row">
+						<a mat-button color="primary" class="text-upper" [disabled]="!loginForm.form.valid" (click)="login()">
+							<span>Anmelden</span>
+						</a>
+					</mat-card-actions>
+				</mat-card>
+			</div>
+		</div>
+	</div>
+	<td-layout-footer>
+		<div layout="row" layout-align="start center">
+			<span class="mat-caption">Copyright &copy; 2018 ribboncode. All rights reserved</span>
+		</div>
+	</td-layout-footer>
+</div>

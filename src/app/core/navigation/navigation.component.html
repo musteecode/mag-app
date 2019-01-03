@@ -1,0 +1,118 @@
+<td-layout>
+	<!-- LEFT SIDENAV -->
+	<td-navigation-drawer class="my-nav-drawer" flex sidenavTitle="{{appName}} {{appTitle}}" logo="assets:teradata" name="Firstname Lastname"
+	    email="firstname.lastname@company.com">
+		<mat-nav-list>
+			<ng-template let-item let-last="last" ngFor [ngForOf]="routes">
+				<a mat-list-item [routerLink]="[item.route]">
+					<mat-icon>{{item.icon}}</mat-icon>{{item.title}}</a>
+			</ng-template>
+		</mat-nav-list>
+		<div td-navigation-drawer-menu>
+			<mat-nav-list>
+				<ng-template let-item let-last="last" ngFor [ngForOf]="userMenu">
+					<a mat-list-item [routerLink]="[item.route]">
+						<mat-icon>{{item.icon}}</mat-icon>{{item.title}}</a>
+				</ng-template>
+				<a mat-list-item (click)="openConfirm()">
+					<mat-icon>exit_to_app</mat-icon>Ausloggen</a>
+			</mat-nav-list>
+		</div>
+	</td-navigation-drawer>
+	<!-- TOOLBAR -->
+	<td-layout-nav-list #navList color="primary" [opened]="media.registerQuery('gt-sm') | async" [mode]="(media.registerQuery('gt-sm') | async) ? 'side' : 'over'"
+	    [sidenavWidth]="(media.registerQuery('gt-xs') | async) ? '350px' : '100%'">
+		<div td-sidenav-toolbar-content layout="row" layout-align="start center">
+			<button mat-icon-button tdLayoutToggle>
+				<mat-icon>menu</mat-icon>
+			</button>
+			<!-- <mat-icon [routerLink]="['/']" class="mat-icon-logo cursor-pointer" svgIcon="assets:teradata"></mat-icon> -->
+			<span [routerLink]="['/']" class="app-name cursor-pointer">{{ appName }}</span>
+			<span [routerLink]="['/']" class="app-title cursor-pointer">{{ appTitle }}</span>
+		</div>
+		<div td-toolbar-content layout="row" layout-align="start center" flex>
+			<button mat-icon-button tdLayoutNavListOpen [hideWhenOpened]="true">
+				<mat-icon>arrow_back</mat-icon>
+			</button>
+			<p><strong>{{today | date:'EEEE'}},</strong></p><p class="mat-small">{{today | date:'dd MMMM yyyy | HH:mm'}}</p>
+			<span flex></span>
+			<button class="overflow-visible" matTooltip="Meldungen" mat-icon-button [matMenuTriggerFor]="notificationsMenu">
+				<td-notification-count color="accent" [notifications]="4">
+					<mat-icon>notifications</mat-icon>
+				</td-notification-count>
+			</button>
+			<mat-menu #notificationsMenu="matMenu" [overlapTrigger]="false">
+				<td-menu>
+					<div td-menu-header class="mat-subheading-2 subheading-light">Meldungen</div>
+					<mat-nav-list dense>
+						<ng-template let-last="last" ngFor [ngForOf]="[0,1,2,3]">
+							<a mat-list-item>
+								<mat-icon matListAvatar>today</mat-icon>
+								<h4 matLine>
+									<span class="text-wrap">A user did an activity on an item that you've subscribed to follow actions on.</span>
+								</h4>
+								<p matLine>22 minutes ago</p>
+							</a>
+							<mat-divider *ngIf="!last"></mat-divider>
+						</ng-template>
+					</mat-nav-list>
+					<button mat-button color="primary" td-menu-footer>
+						Alle Meldungen
+					</button>
+				</td-menu>
+			</mat-menu>
+			<button mat-icon-button matTooltip="Login & Einstellungen" [matMenuTriggerFor]="moreMenu">
+				<mat-icon>more_vert</mat-icon>
+			</button>
+			<mat-menu #moreMenu="matMenu">
+				<button mat-menu-item>
+					<mat-icon>person</mat-icon>
+					<span>Einloggen</span>
+				</button>
+				<button mat-menu-item [routerLink]="['/setting']">
+					<mat-icon>settings</mat-icon>
+					<span>Einstellungen</span>
+				</button>
+				<mat-divider></mat-divider>
+				<button mat-menu-item (click)="openConfirm()">
+					<mat-icon>exit_to_app</mat-icon>
+					<span>Ausloggen</span>
+				</button>
+			</mat-menu>
+		</div>
+		<!-- LEFT NAVIGATION -->
+		<mat-nav-list td-sidenav-content [tdLayoutNavListClose]="!media.query('gt-sm')">
+			<ng-template let-item let-last="last" ngFor [ngForOf]="navMenu">
+				<a mat-list-item [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact:true }" [routerLink]="[item.route]">
+					<mat-icon matListAvatar>{{item.icon}}</mat-icon>
+					<h3 matLine> {{item.title}} </h3>
+					<p matLine> {{item.description}} </p>
+				</a>
+				<mat-divider matInset *ngIf="!last"></mat-divider>
+			</ng-template>
+			<h3 matSubheader class="text-upper">Verwaltung</h3>
+			<ng-template let-item let-last="last" ngFor [ngForOf]="adminMenu">
+				<a mat-list-item [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact:true }" [routerLink]="[item.route]">
+					<mat-icon matListAvatar>{{item.icon}}</mat-icon>
+					<h3 matLine> {{item.title}} </h3>
+					<p matLine> {{item.description}} </p>
+				</a>
+				<mat-divider matInset *ngIf="!last"></mat-divider>
+			</ng-template>
+		</mat-nav-list>
+		<!-- MAIN -->
+		<div tdMediaToggle="gt-xs" [mediaClasses]="['push-sm']">
+			<router-outlet></router-outlet>
+		</div>
+		<!-- FOOTER -->
+		<!-- <td-layout-footer-inner *ngIf="media.query('gt-sm')">
+			Optional inner footer
+		</td-layout-footer-inner> -->
+		<!-- STATUS BAR -->
+		<td-layout-footer>
+			<div layout="row" layout-align="start center">
+				<span class="mat-caption">Copyright &copy; {{today | date:'yyyy'}} ribboncode. All rights reserved</span>
+			</div>
+		</td-layout-footer>
+	</td-layout-nav-list>
+</td-layout>

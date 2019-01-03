@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald:200,300,400,600,700');
+@import './../../../theme';
+
+:host /deep/ {
+	mat-divider {
+		display: block;
+		border-top-style: solid;
+		border-top-width: 1px;
+	}
+}
+
+.app-name {
+	font-family: 'Oswald';
+	font-weight: 700;
+	font-size: 1.5em;
+}
+
+.app-title {
+	margin-top: 7px;
+	margin-left: 1px;
+	font-family: 'Oswald';
+	font-weight: 400;
+}
+
+.mat-card-title {
+	font-size: 24px;
+	font-weight: 400;
+}
+
+.mat-card-actions,
+.mat-card-content,
+.mat-card-subtitle,
+.mat-card-title {
+	display: block;
+	margin-bottom: 0;
+}
+
+.mat-card mat-card-subtitle {
+	padding-bottom: 16px;
+}
+
+.theme-background {
+	background-color: mat-color($primary);
+}
+
+.theme-color {
+	color: mat-color($primary, default-contrast);
+}
+
+@media (min-width: 600px) {
+	[layout='row']>[flex-gt-xs='50'],
+	[layout-gt-xs='row']>[flex-gt-xs='50'] {
+		height: 500px;
+		max-width: 450px;
+	}
+}

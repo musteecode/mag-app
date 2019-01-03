@@ -1,0 +1,41 @@
+@import './../../../../theme';
+
+form.normal-form {
+	margin: 10px;
+}
+
+.controls-container {
+	width: 100%;
+	padding: 5%;
+}
+
+.form-controls-container {
+	width: 100%;
+	padding: 5%;
+}
+
+.form-controls-container>* {
+	width: 100%;
+}
+
+.form-controls-header {
+	margin-bottom: 20px;
+}
+
+.form-controls-title {
+	display: block;
+	margin-bottom: 0px;
+	color: mat-color($primary);
+}
+
+.form-controls-title-asteriks {
+	color: mat-color($warn);
+}
+
+.form-controls-subtitle {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.form-controls-actions {
+	margin-top: 10px;
+}
