@@ -5,8 +5,8 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	HostBinding,
-	ViewContainerRef,
-	NgZone
+	NgZone,
+	ViewContainerRef
 } from '@angular/core';
 
 import {
@@ -46,8 +46,8 @@ export class NavigationComponent {
 		this.zone.run(() => {
 			setInterval(() => {
 				this.today = Date.now();
-			}, 1)
-		})
+			}, 1);
+		});
 	}
 
 	appName = 'MAG';
@@ -130,7 +130,7 @@ export class NavigationComponent {
 		this.dialogService
 			.openConfirm({
 				message:
-					'Du versuchst dich gerade abzumelden. Möchtest Du fortfahren?',
+				'Du versuchst dich gerade abzumelden. Möchtest Du fortfahren?',
 				disableClose: true,
 				viewContainerRef: this.viewContainerRef,
 				title: 'Abmelden',

@@ -8,7 +8,7 @@ import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 import { switchMap } from 'rxjs/operators';
 
-interface User {
+interface IUser {
 	uid: string;
 	email: string;
 	userName: string;
@@ -19,24 +19,23 @@ interface User {
 @Injectable()
 export class AuthService {
 
-	user: Observable<User>;
+	user: Observable<IUser>;
 
 	constructor(
 		private afAuth: AngularFireAuth,
 		private afs: AngularFirestore,
 		private router: Router) {
-		// Get auth data, then get firestore user document || null
 
-		this.user = this.afAuth.authState.pipe(
-			switchMap(user => {
+		// Get auth data, then get firestore user document || null
+		this.user = this.afAuth.authState
+			.switchMap(user => {
 				if (user) {
 					console.log(user);
-					return this.afs.doc<User>(`Users/${user.uid}`).valueChanges();
+					return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
 				} else {
 					return Observable.of(null);
 				}
-			})
-		);
+			});
 	}
 
 	emailLogin(email: string, password: string) {
@@ -52,9 +51,8 @@ export class AuthService {
 
 	private updateUserData(user: any) {
 		// Sets user data to firestore on login
-
-		const userRef: AngularFirestoreDocument<User> = this.afs.doc(`Users/${user.uid}`);
-		const data: User = {
+		const userRef: AngularFirestoreDocument<IUser> = this.afs.doc(`users/${user.uid}`);
+		const data: IUser = {
 			uid: user.uid,
 			email: user.email,
 			userName: user.displayName,
@@ -62,21 +60,22 @@ export class AuthService {
 			modifiedAt: new Date(Date.now())
 		};
 
-		return userRef.update(data);
+		return userRef.set(data, { merge: true })
+			.then(() => console.log(`user with Id ${user.uid} was updated successfully.`))
+			.catch(err => console.log(err));
 	}
 
 	private trackCurrentUser() {
 		// Get auth data, then get firestore user document || null
 
-		this.user = this.afAuth.authState.pipe(
-			switchMap(user => {
+		this.user = this.afAuth.authState
+			.switchMap(user => {
 				if (user) {
 					console.log(user);
-					return this.afs.doc<User>(`Users/${user.uid}`).valueChanges();
+					return this.afs.doc<IUser>(`users/${user.uid}`).valueChanges();
 				} else {
 					return Observable.of(null);
 				}
-			})
-		);
+			});
 	}
 }

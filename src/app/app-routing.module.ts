@@ -21,6 +21,8 @@ import { ProductNewComponent } from './core/product/product-new/product-new.comp
 import { ProductComponent } from './core/product/product.component';
 import { ReportComponent } from './core/report/report.component';
 
+import { AuthGuard } from './core/services/auth.guard';
+
 const routes: Routes = [
 	{
 		path: 'login',
@@ -31,19 +33,19 @@ const routes: Routes = [
 		component: NavigationComponent,
 		children: [
 			{ path: '', component: CustomerOverviewComponent },
-			{ path: 'newCustomer', component: CustomerNewComponent },
-			{ path: 'editCustomer/:id', component: CustomerEditComponent },
+			{ path: 'newCustomer', component: CustomerNewComponent, canActivate: [AuthGuard] },
+			{ path: 'editCustomer/:id', component: CustomerEditComponent, canActivate: [AuthGuard] },
 			{ path: 'payment', component: CustomerPaymentComponent },
-			{ path: 'editPayment', component: CustomerPaymentEditComponent },
+			{ path: 'editPayment', component: CustomerPaymentEditComponent, canActivate: [AuthGuard] },
 			{ path: 'product', component: ProductComponent },
-			{ path: 'newProduct', component: ProductNewComponent },
-			{ path: 'editProduct/:id', component: ProductEditComponent },
+			{ path: 'newProduct', component: ProductNewComponent, canActivate: [AuthGuard] },
+			{ path: 'editProduct/:id', component: ProductEditComponent, canActivate: [AuthGuard] },
 			{ path: 'report', component: ReportComponent },
 			{ path: 'log', component: ActivityLogComponent },
 			{ path: 'setting', component: SettingComponent },
 			{ path: 'user', component: UserComponent },
-			{ path: 'newUser', component: UserNewComponent },
-			{ path: 'editUser/:id', component: UserEditComponent },
+			{ path: 'newUser', component: UserNewComponent, canActivate: [AuthGuard] },
+			{ path: 'editUser/:id', component: UserEditComponent, canActivate: [AuthGuard] },
 			{ path: '**', redirectTo: '', pathMatch: 'full' },
 		]
 	}
@@ -51,7 +53,8 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [RouterModule.forRoot(routes)],
-	exports: [RouterModule]
+	exports: [RouterModule],
+	providers: [AuthGuard]
 })
 export class AppRoutingModule { }
 export const routedComponents: any[] = [

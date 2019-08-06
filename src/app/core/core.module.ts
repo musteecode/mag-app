@@ -5,6 +5,7 @@ import { AuthService } from './services/auth.service';
 import { CustomerService } from './services/customer.service';
 import { PaymentService } from './services/payment.service';
 import { ProductService } from './services/product.service';
+import { ReminderService } from './services/reminder.service';
 import { SettingService } from './services/setting.service';
 import { UserService } from './services/user.service';
 
@@ -28,7 +29,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 		PaymentService,
 		ProductService,
 		SettingService,
-		UserService
+		UserService,
+		ReminderService
 	]
 })
 

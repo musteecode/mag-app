@@ -16,7 +16,7 @@ import {
 	selector: 'app-login',
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss'],
-	animations: [TdFadeInOutAnimation({duration: 600, delay: 200})]
+	animations: [TdFadeInOutAnimation({ duration: 600, delay: 200 })]
 })
 
 export class LoginComponent {
@@ -43,14 +43,14 @@ export class LoginComponent {
 	login(): void {
 		this.loadingService.register('loginScreen');
 		this.auth.emailLogin(this.username, this.password)
-		.then(() => {
-			this.router.navigate(['/']);
-			this.loadingService.resolve();
-		})
-		.catch(error => {
-			this.loadingService.resolve('loginScreen');
-			this.error = error;
-		})
+			.then(() => {
+				this.router.navigate(['/']);
+				this.loadingService.resolve();
+			})
+			.catch(error => {
+				this.loadingService.resolve('loginScreen');
+				this.error = error;
+			});
 	}
 
 	clearError(input: HTMLInputElement) {

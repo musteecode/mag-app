@@ -9,14 +9,15 @@
 				</span>
 				<span *ngIf="selectedRows.length && selectable" class="mat-body-1">0 item(s) selected</span>
 			</span>
-			<td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Suchbegriff" (searchDebounce)="search($event)"
-			 flex>
+			<td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Suchbegriff"
+				(searchDebounce)="search($event)" flex>
 			</td-search-box>
 		</div>
 		<!-- <mat-divider></mat-divider> -->
-		<td-data-table #dataTable [data]="filteredData" [columns]="columns" [selectable]="selectable" [clickable]="clickable"
-		 [multiple]="multiple" [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows" [sortOrder]="sortOrder"
-		 (sortChange)="sort($event)" (rowClick)="onClick($event)">
+		<td-data-table #dataTable [data]="filteredData" [columns]="columns" [selectable]="selectable"
+			[clickable]="clickable" [multiple]="multiple" [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows"
+			[sortOrder]="sortOrder" (sortChange)="sort($event)">
+			<!-- [sortOrder]="sortOrder" (sortChange)="sort($event)" (rowClick)="onClick($event)"> -->
 			<ng-template tdDataTableTemplate="faelligkeit" let-value="value" let-row="row" let-column="column">
 				<div layout="row">
 					{{ row['faelligkeit'] | date:'dd MMMM yyyy' }}
@@ -43,10 +44,12 @@
 			</ng-template>
 			<ng-template tdDataTableTemplate="aktion" let-value="value" let-row="row" let-column="column">
 				<div layout="row">
-					<a mat-button (click)="changeInvoiceStatus(row, 'rechnungsstatus')" class="textstyled-button mat-primary">Status</a>
-					<a mat-button (click)="sendReminder(row, 'mahnstatus')" class="textstyled-button mat-primary">Mahnen</a>
-					<a mat-button (click)="onEdit($event)" class="textstyled-button mat-primary">Notiz</a>
-					<a mat-button (click)="addComment(row, 'notiz')" class="textstyled-button mat-primary">Löschen</a>
+					<!-- <a mat-button (click)="changeInvoiceStatus(row, 'rechnungsstatus')"
+						class="textstyled-button mat-primary">Status</a>
+					<a mat-button (click)="sendReminder(row, 'mahnstatus')"
+						class="textstyled-button mat-primary">Mahnen</a> -->
+					<a mat-button (click)="onEdit(row)" class="textstyled-button mat-primary">Zahlung Bearbeiten</a>
+					<!-- <a mat-button (click)="addComment(row, 'notiz')" class="textstyled-button mat-primary">Löschen</a> -->
 					<!-- <a mat-button (click)="addComment(row, 'notiz')" [class.mat-primary]="!row['notiz']" class="textstyled-button" >{{row['notiz'] || 'Notiz Erfassen'}}</a> -->
 				</div>
 			</ng-template>

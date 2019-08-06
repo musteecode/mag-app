@@ -1,5 +1,5 @@
 import { DatePipe, Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialogConfig } from '@angular/material';
 import { TdDialogService } from '@covalent/core';
 import {
@@ -37,7 +37,7 @@ export enum Intervall {
 	Jaehrlich
 }
 
-export interface IPayment {
+export interface Zahlung {
 	id: Guid;
 	vertrag: string;
 	kunde: string;
@@ -45,13 +45,14 @@ export interface IPayment {
 	faelligkeit: Date;
 	betrag: number;
 	bezahltAm: Date;
-	intervall: string;
+	intervall: Intervall;
 	mahnstatus: Mahnstatus;
 	rechnungsstatus: Rechnungsstatus;
 	notiz: string;
+	mahnen: boolean;
 }
 
-const PAYMENT_DATA: IPayment[] = [
+const PAYMENT_DATA: Zahlung[] = [
 	{
 		id: Guid.create(),
 		vertrag: '81385',
@@ -60,10 +61,11 @@ const PAYMENT_DATA: IPayment[] = [
 		faelligkeit: new Date('12/15/15, 8:00 PM'),
 		bezahltAm: new Date('12/15/17, 11:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Bezahlt,
-		intervall: 'Jährlich',
+		intervall: Intervall.Jaehrlich,
 		betrag: 375.50,
 		mahnstatus: Mahnstatus.NichtGemahnt,
-		notiz: ''
+		notiz: '',
+		mahnen: false
 	},
 	{
 		id: Guid.create(),
@@ -73,10 +75,11 @@ const PAYMENT_DATA: IPayment[] = [
 		faelligkeit: new Date('09/15/14, 4:00 AM'),
 		bezahltAm: new Date('10/15/16, 2:00 AM'),
 		rechnungsstatus: Rechnungsstatus.NichtFaellig,
-		intervall: 'Jährlich',
+		intervall: Intervall.Jaehrlich,
 		betrag: 400.50,
 		mahnstatus: Mahnstatus.NichtGemahnt,
-		notiz: ''
+		notiz: '',
+		mahnen: false
 	},
 	{
 		id: Guid.create(),
@@ -86,23 +89,25 @@ const PAYMENT_DATA: IPayment[] = [
 		faelligkeit: new Date('12/15/15, 8:00 PM'),
 		bezahltAm: new Date('12/15/17, 11:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Ausstehend,
-		intervall: 'Monatlich',
+		intervall: Intervall.Monatlich,
 		betrag: 98.50,
 		mahnstatus: Mahnstatus.Stufe2,
-		notiz: ''
+		notiz: '',
+		mahnen: false
 	},
 	{
 		id: Guid.create(),
 		vertrag: '83796',
-		rechnungsbeschreibung: 'Injection over Composition',
+		rechnungsbeschreibung: 'Injection over Composition 1234567890 12345678901234567890',
 		kunde: 'Gauda',
 		faelligkeit: new Date('1/18/11, 1:00 PM'),
 		bezahltAm: new Date('12/14/14, 5:00 AM'),
 		rechnungsstatus: Rechnungsstatus.Bezahlt,
-		intervall: 'Monatlich',
+		intervall: Intervall.Monatlich,
 		betrag: 112.50,
 		mahnstatus: Mahnstatus.NichtGemahnt,
-		notiz: ''
+		notiz: '',
+		mahnen: false
 	},
 	{
 		id: Guid.create(),
@@ -112,10 +117,11 @@ const PAYMENT_DATA: IPayment[] = [
 		faelligkeit: new Date('3/4/10, 11:00 AM'),
 		bezahltAm: new Date('2/5/17, 7:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Ausstehend,
-		intervall: 'Monatlich',
+		intervall: Intervall.Monatlich,
 		betrag: 65.50,
 		mahnstatus: Mahnstatus.Stufe3,
-		notiz: ''
+		notiz: '',
+		mahnen: false
 	},
 	{
 		id: Guid.create(),
@@ -125,10 +131,11 @@ const PAYMENT_DATA: IPayment[] = [
 		faelligkeit: new Date('3/4/10, 11:00 AM'),
 		bezahltAm: new Date('2/5/17, 7:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Ausstehend,
-		intervall: 'Monatlich',
+		intervall: Intervall.Monatlich,
 		betrag: 65.50,
 		mahnstatus: Mahnstatus.Stufe1,
-		notiz: ''
+		notiz: '',
+		mahnen: false
 	},
 	{
 		id: Guid.create(),
@@ -138,10 +145,11 @@ const PAYMENT_DATA: IPayment[] = [
 		faelligkeit: new Date('3/4/10, 11:00 AM'),
 		bezahltAm: new Date('2/5/17, 7:00 PM'),
 		rechnungsstatus: Rechnungsstatus.NichtFaellig,
-		intervall: 'Jährlich',
+		intervall: Intervall.Jaehrlich,
 		betrag: 665.50,
 		mahnstatus: Mahnstatus.NichtGemahnt,
-		notiz: ''
+		notiz: '',
+		mahnen: false
 	},
 	{
 		id: Guid.create(),
@@ -151,10 +159,11 @@ const PAYMENT_DATA: IPayment[] = [
 		faelligkeit: new Date('3/4/10, 11:00 AM'),
 		bezahltAm: new Date('2/5/17, 7:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Ausstehend,
-		intervall: 'Halbjährlich',
+		intervall: Intervall.Halbjaehrlich,
 		betrag: 235.50,
 		mahnstatus: Mahnstatus.Stufe1,
-		notiz: ''
+		notiz: '',
+		mahnen: false
 	},
 	{
 		id: Guid.create(),
@@ -164,10 +173,11 @@ const PAYMENT_DATA: IPayment[] = [
 		faelligkeit: new Date('3/4/10, 11:00 AM'),
 		bezahltAm: new Date('2/5/17, 7:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Bezahlt,
-		intervall: 'Jährlich',
+		intervall: Intervall.Jaehrlich,
 		betrag: 465.50,
 		mahnstatus: Mahnstatus.NichtGemahnt,
-		notiz: ''
+		notiz: '',
+		mahnen: false
 	},
 	{
 		id: Guid.create(),
@@ -177,10 +187,11 @@ const PAYMENT_DATA: IPayment[] = [
 		faelligkeit: new Date('3/4/10, 11:00 AM'),
 		bezahltAm: new Date('2/5/17, 7:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Ausstehend,
-		intervall: 'Halbjährlich',
+		intervall: Intervall.Halbjaehrlich,
 		betrag: 188.90,
 		mahnstatus: Mahnstatus.Stufe1,
-		notiz: ''
+		notiz: '',
+		mahnen: false
 	},
 ];
 
@@ -193,17 +204,18 @@ const PAYMENT_DATA: IPayment[] = [
 export class CustomerPaymentComponent {
 
 	columns: ITdDataTableColumn[] = [
+		{ name: 'id', label: 'Id', hidden: true },
 		// { name: 'vertrag',  label: 'Vertrag', filter: true, sortable: true },
 		{ name: 'kunde', label: 'Kunde', filter: true, sortable: true },
-		{ name: 'rechnungsbeschreibung', label: 'Rechnung', width: 280 },
-		{ name: 'faelligkeit', label: 'Fälligkeit', format: DATE_FORMAT },
-		{ name: 'betrag', label: 'Betrag', filter: true, numeric: true, format: DECIMAL_FORMAT },
+		{ name: 'rechnungsbeschreibung', label: 'Rechnung', width: 350 },
+		{ name: 'faelligkeit', label: 'Fälligkeit', format: DATE_FORMAT, width: 250 },
+		{ name: 'betrag', label: 'Betrag', filter: true, numeric: true, format: DECIMAL_FORMAT, width: 100 },
 		// { name: 'bezahltAm', label: 'BezahltAm', width: 170, format: DATE_FORMAT },
 		// { name: 'intervall', label: 'Intervall' },
 		{ name: 'mahnstatus', label: 'Mahnung', width: 80 },
 		{ name: 'rechnungsstatus', label: 'Status', width: 80 },
 		{ name: 'notiz', label: 'Notiz', hidden: true },
-		{ name: 'aktion', label: '', filter: false, sortable: false, width: 390 },
+		{ name: 'aktion', label: 'Aktion', filter: false, sortable: false, width: 250 },
 	];
 
 	private mahnstatus = Mahnstatus;
@@ -228,46 +240,46 @@ export class CustomerPaymentComponent {
 		private dataTableService: TdDataTableService,
 		private dialogService: TdDialogService) { }
 
-	ngOnInit(): void {
-		this.filter();
-	}
+	// ngOnInit(): void {
+	// 	this.filter();
+	// }
 
 	navigateBack() {
 		this.location.back();
 	}
 
-	changeInvoiceStatus(row: any, name: string): void {
-		this.dialogService.openPrompt({
-			message: 'Notiz erfassen?',
-			value: row[name],
-		}).afterClosed().subscribe((value: any) => {
-			if (value !== undefined) {
-				row[name] = value;
-			}
-		});
-	}
+	// changeInvoiceStatus(row: any, name: string): void {
+	// 	this.dialogService.openPrompt({
+	// 		message: 'Notiz erfassen?',
+	// 		value: row[name],
+	// 	}).afterClosed().subscribe((value: any) => {
+	// 		if (value !== undefined) {
+	// 			row[name] = value;
+	// 		}
+	// 	});
+	// }
 
-	sendReminder(row: any, name: string): void {
-		this.dialogService.openPrompt({
-			message: 'Notiz erfassen?',
-			value: row[name],
-		}).afterClosed().subscribe((value: any) => {
-			if (value !== undefined) {
-				row[name] = value;
-			}
-		});
-	}
+	// sendReminder(row: any, name: string): void {
+	// 	this.dialogService.openPrompt({
+	// 		message: 'Notiz erfassen?',
+	// 		value: row[name],
+	// 	}).afterClosed().subscribe((value: any) => {
+	// 		if (value !== undefined) {
+	// 			row[name] = value;
+	// 		}
+	// 	});
+	// }
 
-	addComment(row: any, name: string): void {
-		this.dialogService.openPrompt({
-			message: 'Notiz erfassen?',
-			value: row[name],
-		}).afterClosed().subscribe((value: any) => {
-			if (value !== undefined) {
-				row[name] = value;
-			}
-		});
-	}
+	// addComment(row: any, name: string): void {
+	// 	this.dialogService.openPrompt({
+	// 		message: 'Notiz erfassen?',
+	// 		value: row[name],
+	// 	}).afterClosed().subscribe((value: any) => {
+	// 		if (value !== undefined) {
+	// 			row[name] = value;
+	// 		}
+	// 	});
+	// }
 
 	sort(sortEvent: ITdDataTableSortChangeEvent): void {
 		this.sortBy = sortEvent.name;
@@ -288,18 +300,27 @@ export class CustomerPaymentComponent {
 		this.filter();
 	}
 
-	onClick(event: any): void {
-		const row: any = event.row;
-		console.log(row);
-	}
+	// onClick(event: any): void {
+	// 	const row: any = event.row;
+	// 	console.log(row);
+	// }
 
-	onEdit(event: any): void {
+	onEdit(row: Zahlung): void {
 		const dialogConfig = new MatDialogConfig();
 		dialogConfig.disableClose = true;
 		dialogConfig.autoFocus = true;
 		dialogConfig.width = '55%';
+		dialogConfig.data = row;
 
-		this.dialogService.open(CustomerPaymentEditComponent, dialogConfig);
+		const dialogRef = this.dialogService.open(CustomerPaymentEditComponent, dialogConfig);
+		dialogRef.beforeClose().subscribe(result => {
+			if (result) {
+				console.log('following updates were requested');
+				console.log(result);
+			} else {
+				console.log('nothing to update');
+			}
+		});
 	}
 
 	filter(): void {

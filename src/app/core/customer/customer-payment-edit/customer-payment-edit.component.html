@@ -1,29 +1,29 @@
 <mat-card-content>
-	<form [formGroup]="service.form" class="normal-form">
+	<form [formGroup]="kundenzahlungForm" class="normal-form">
 		<mat-grid-list cols="2" rowHeight="300px">
 			<mat-grid-tile>
 				<div class="controls-container">
 					<input type="hidden" formControlName="$key">
 					<mat-form-field>
-						<input formControlName="kunde" matInput placeholder="Kundenname" value="Atilla Gökcegün">
+						<input formControlName="kunde" matInput placeholder="Kundenname">
 					</mat-form-field>
 					<mat-form-field>
-						<input formControlName="vertrag" matInput placeholder="Vertrag" value="XL-Internet-0099">
+						<input formControlName="vertrag" matInput placeholder="Vertrag">
 					</mat-form-field>
 					<mat-form-field>
-						<input formControlName="betrag" matInput placeholder="Betrag" value="CHF 309.-">
+						<input formControlName="betrag" matInput placeholder="Betrag">
 					</mat-form-field>
 					<mat-form-field>
-						<input formControlName="faelligkeit" matInput placeholder="Fälligkeitsdatum" value="05.10.2018">
+						<input formControlName="faelligkeit" matInput placeholder="Fälligkeitsdatum">
 					</mat-form-field>
 					<mat-form-field>
-						<input formControlName="rechnungsbeschreibung" matInput placeholder="Rechnungsbeschreibung" value="Flat ADSL Internet">
+						<input formControlName="rechnungsbeschreibung" matInput placeholder="Rechnungsbeschreibung">
 					</mat-form-field>
 					<mat-form-field>
-						<input formControlName="intervall" matInput placeholder="Rechnungszyklus" value="Monatlich">
+						<input formControlName="intervall" matInput placeholder="Rechnungszyklus">
 					</mat-form-field>
 					<mat-form-field>
-						<input formControlName="mahnstatus" matInput placeholder="Mahnstufe" value="2. Mahnung">
+						<input formControlName="mahnstatus" matInput placeholder="Mahnstufe">
 					</mat-form-field>
 				</div>
 			</mat-grid-tile>
@@ -31,23 +31,27 @@
 				<div class="form-controls-container">
 					<div class="form-controls-header">
 						<span class="form-controls-title">
-							<span class="form-controls-title-asteriks">**</span> ACHTUNG <span class="form-controls-title-asteriks">**</span>
+							<span class="form-controls-title-asteriks">**</span> ACHTUNG <span
+								class="form-controls-title-asteriks">**</span>
 						</span>
-						<span class="form-controls-subtitle">die nächste Mahnstufe löst die Deaktivierung der Dienste aus.</span>
+						<span class="form-controls-subtitle">die nächste Mahnstufe löst die Deaktivierung der Dienste
+							aus.</span>
 					</div>
 					<mat-form-field>
-						<input formControlName="bezahltAm" matInput [matDatepicker]="picker" placeholder="Hat bezahlt am" required>
+						<input formControlName="bezahltAm" matInput [matDatepicker]="picker"
+							placeholder="Hat bezahlt am" required>
 						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 						<mat-datepicker #picker [startAt]="today"></mat-datepicker>
-						<mat-error>Dies ist ein Pflichtfeld.</mat-error>
+						<mat-error>Ein Datum ist erforderlich.</mat-error>
 					</mat-form-field>
 					<mat-form-field>
-						<textarea formControlName="notiz" matInput placeholder="Notiz hinterlegen"></textarea>
-						<mat-hint align="end">{{ service.form.controls['notiz'].value.length }} / 50 max</mat-hint>
+						<input formControlName="notiz" matInput maxLength="100" placeholder="Notiz hinterlegen">
+						<mat-hint align="end">{{ kundenzahlungForm.controls['notiz'].value.length }} / 100 max
+						</mat-hint>
 						<mat-error>Maximal sind 50 Zeichen zugelassen.</mat-error>
 					</mat-form-field>
 					<div class="form-controls-actions">
-						<mat-slide-toggle>Mahnung auslösen</mat-slide-toggle>
+						<mat-slide-toggle formControlName="mahnen">Mahnung auslösen</mat-slide-toggle>
 					</div>
 				</div>
 			</mat-grid-tile>
@@ -56,6 +60,7 @@
 </mat-card-content>
 <mat-divider></mat-divider>
 <mat-card-actions>
-	<button mat-button color="primary" class="text-upper" type="submit" [disabled]="service.form.invalid">Speichern</button>
+	<button mat-button color="primary" class="text-upper" type="submit" [disabled]="kundenzahlungForm.invalid"
+		(click)="onSubmit()">Speichern</button>
 	<button mat-button class="text-upper" (click)="onCancel()">Abbrechen</button>
 </mat-card-actions>
