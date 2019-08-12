@@ -2,7 +2,6 @@ import { DatePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Intervall, Mahnstatus } from './../customer-payment/customer-payment.component';
 
 @Component({
 	selector: 'app-customer-payment-edit',
@@ -22,13 +21,13 @@ export class CustomerPaymentEditComponent implements OnInit {
 	ngOnInit() {
 		this.kundenzahlungForm = this.fb.group({
 			$key: [this.data.id],
-			betrag: [this.data.betrag],
-			vertrag: [this.data.vertrag],
-			kunde: [this.data.kunde],
-			faelligkeit: [this.pipe.transform(this.data.faelligkeit, 'dd MMMM yyyy')],
-			rechnungsbeschreibung: [this.data.rechnungsbeschreibung],
-			intervall: [Intervall[this.data.intervall]],
-			mahnstatus: [Mahnstatus[this.data.mahnstatus]],
+			betrag: [{ value: this.data.betrag, disabled: true }],
+			vertrag: [{ value: this.data.vertrag, disabled: true }],
+			kunde: [{ value: this.data.kunde, disabled: true }],
+			faelligkeit: [{ value: this.pipe.transform(this.data.faelligkeit, 'dd MMMM yyyy'), disabled: true }],
+			rechnungsbeschreibung: [{ value: this.data.rechnungsbeschreibung, disabled: true }],
+			intervall: [{ value: this.data.intervall, disabled: true }],
+			mahnstatus: [{ value: this.data.mahnstatus, disabled: true }],
 			bezahltAm: ['', Validators.required],
 			notiz: [this.data.notiz],
 			mahnen: [this.data.mahnen]

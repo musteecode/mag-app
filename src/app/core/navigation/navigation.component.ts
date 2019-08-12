@@ -1,4 +1,6 @@
 import { DatePipe } from '@angular/common';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import {
@@ -35,6 +37,8 @@ export class NavigationComponent {
 		private dialogService: TdDialogService,
 		private viewContainerRef: ViewContainerRef,
 		private zone: NgZone,
+		private matIconRegistry: MatIconRegistry,
+		private domSanitizer: DomSanitizer,
 	) {
 		this.loadingService.create({
 			name: 'loginScreen',
@@ -48,6 +52,11 @@ export class NavigationComponent {
 				this.today = Date.now();
 			}, 1);
 		});
+
+		this.matIconRegistry.addSvgIcon(
+			'ribboncode',
+			this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/ribboncode.svg')
+		);
 	}
 
 	appName = 'MAG';

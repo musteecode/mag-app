@@ -18,23 +18,23 @@ const DECIMAL_FORMAT: (v: any) => any = (v: number) => v.toFixed(2);
 const DATE_FORMAT: (v: any) => any = (v: Date) => v.toDateString();
 
 export enum Rechnungsstatus {
-	NichtFaellig,
-	Bezahlt,
-	Ausstehend
+	NichtFaellig = 'Alles in Ordnung',
+	Bezahlt = 'Bezahlt',
+	Ausstehend = 'Ausstehend'
 }
 
 export enum Mahnstatus {
-	NichtGemahnt,
-	Stufe1,
-	Stufe2,
-	Stufe3,
-	ServiceEingestellt
+	NichtGemahnt = 'Nicht gemahnt',
+	Stufe1 = '1. Mahnstufe',
+	Stufe2 = '2. Mahnstufe',
+	Stufe3 = '3. Mahnstufe',
+	ServiceEingestellt = 'Service eingestellt'
 }
 
 export enum Intervall {
-	Monatlich,
-	Halbjaehrlich,
-	Jaehrlich
+	Monatlich = 'Monatlich',
+	Halbjaehrlich = 'Halbjährlich',
+	Jaehrlich = 'Jährlich'
 }
 
 export interface Zahlung {

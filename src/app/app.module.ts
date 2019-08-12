@@ -38,4 +38,5 @@ import { AppRoutingModule, routedComponents } from './app-routing.module';
 	providers: [{ provide: LOCALE_ID, useValue: 'de-CH' }],
 	bootstrap: [AppComponent]
 })
+
 export class AppModule { }

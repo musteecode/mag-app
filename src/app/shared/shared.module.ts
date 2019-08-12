@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule, ViewChild } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -45,7 +46,7 @@ import {
 
 const FLEX_LAYOUT_MODULES: any[] = [FlexLayoutModule];
 
-const ANGULAR_MODULES: any[] = [FormsModule, ReactiveFormsModule];
+const ANGULAR_MODULES: any[] = [FormsModule, ReactiveFormsModule, CommonModule, HttpClientModule];
 
 const MATERIAL_MODULES: any[] = [
 	MatButtonModule,
@@ -85,7 +86,6 @@ const COVALENT_MODULES: any[] = [
 
 @NgModule({
 	imports: [
-		CommonModule,
 		ANGULAR_MODULES,
 		MATERIAL_MODULES,
 		COVALENT_MODULES,
