@@ -1,9 +1,10 @@
+// tslint:disable:no-submodule-imports
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs-compat';
 import { switchMap } from 'rxjs/operators';
 
 interface Zahlung {

@@ -5,7 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ActivityLogComponent } from './core/admin/activity-log/activity-log.component';
 import { SettingComponent } from './core/admin/setting/setting.component';
 import { UserEditComponent } from './core/admin/user/user-edit/user-edit.component';
-import { UserNewComponent } from './core/admin/user/user-new/user-new.component';
 import { UserComponent } from './core/admin/user/user.component';
 
 // Core Components
@@ -44,8 +43,7 @@ const routes: Routes = [
 			{ path: 'log', component: ActivityLogComponent },
 			{ path: 'setting', component: SettingComponent },
 			{ path: 'user', component: UserComponent },
-			{ path: 'newUser', component: UserNewComponent, canActivate: [AuthGuard] },
-			{ path: 'editUser/:id', component: UserEditComponent, canActivate: [AuthGuard] },
+			{ path: 'editUser', component: UserEditComponent, canActivate: [AuthGuard] },
 			{ path: '**', redirectTo: '', pathMatch: 'full' },
 		]
 	}
@@ -61,7 +59,6 @@ export const routedComponents: any[] = [
 	ActivityLogComponent,
 	SettingComponent,
 	UserComponent,
-	UserNewComponent,
 	UserEditComponent,
 	CustomerEditComponent,
 	CustomerNewComponent,

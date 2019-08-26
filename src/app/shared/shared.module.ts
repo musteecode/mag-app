@@ -19,7 +19,6 @@ import {
 import { CovalentDataTableModule } from '@covalent/core/data-table';
 import { CovalentPagingModule } from '@covalent/core/paging';
 import { CovalentMarkdownModule } from '@covalent/markdown';
-import { Guid } from 'guid-typescript';
 
 import {
 	MatButtonModule,
@@ -33,6 +32,7 @@ import {
 	MatListModule,
 	MatMenuModule,
 	MatNativeDateModule,
+	MatRadioModule,
 	MatSelectModule,
 	MatSidenavModule,
 	MatSlideToggleModule,
@@ -44,10 +44,10 @@ import {
 	MatTooltipModule
 } from '@angular/material';
 
-const FLEX_LAYOUT_MODULES: any[] = [FlexLayoutModule];
+import { Guid } from 'guid-typescript';
 
-const ANGULAR_MODULES: any[] = [FormsModule, ReactiveFormsModule, CommonModule, HttpClientModule];
-
+const OTHER_MODULES: any[] = [];
+const ANGULAR_MODULES: any[] = [FormsModule, ReactiveFormsModule, CommonModule, HttpClientModule, FlexLayoutModule];
 const MATERIAL_MODULES: any[] = [
 	MatButtonModule,
 	MatCardModule,
@@ -66,7 +66,8 @@ const MATERIAL_MODULES: any[] = [
 	MatTableModule,
 	MatDatepickerModule,
 	MatGridListModule,
-	MatNativeDateModule
+	MatNativeDateModule,
+	MatRadioModule
 ];
 
 const COVALENT_MODULES: any[] = [
@@ -89,14 +90,14 @@ const COVALENT_MODULES: any[] = [
 		ANGULAR_MODULES,
 		MATERIAL_MODULES,
 		COVALENT_MODULES,
-		FLEX_LAYOUT_MODULES
+		OTHER_MODULES
 	],
 	declarations: [],
 	exports: [
 		ANGULAR_MODULES,
 		MATERIAL_MODULES,
 		COVALENT_MODULES,
-		FLEX_LAYOUT_MODULES
+		OTHER_MODULES
 	],
 	providers: [MatDatepickerModule]
 })

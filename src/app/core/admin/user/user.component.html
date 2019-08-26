@@ -1,14 +1,104 @@
 <mat-card>
-	<mat-card-title>Benutzerverwaltung</mat-card-title>
-	<mat-card-subtitle>card subtitle</mat-card-subtitle>
-	<mat-divider></mat-divider>
 	<mat-card-content>
-		card content
+		<div layout="row" layout-align="start center" class="pad-left-sm pad-right-sm">
+			<span *ngIf="!searchBox.searchVisible" class="push-left-sm">
+				<span *ngIf="(selectable && !selectedRows.length) || !selectable"
+					class="mat-title">Benutzerverwaltung</span>
+				<br>
+				<span *ngIf="(selectable && !selectedRows.length) || !selectable" class="mat-small mag-subtitle">
+					hier kannst du Benutzer und Benutzerrollen sowie deren Profile verwalten
+				</span>
+				<span *ngIf="selectedRows.length && selectable" class="mat-body-1">0 item(s) selected</span>
+			</span>
+			<td-search-box #searchBox backIcon="arrow_back" class="push-right-sm" placeholder="Suchbegriff"
+				(searchDebounce)="search($event)" flex>
+			</td-search-box>
+		</div>
+		<!-- <mat-divider></mat-divider> -->
+		<td-data-table #dataTable [data]="filteredData" [columns]="columns" [selectable]="selectable"
+			[clickable]="clickable" [multiple]="multiple" [sortable]="true" [sortBy]="sortBy" [(ngModel)]="selectedRows"
+			[sortOrder]="sortOrder" (sortChange)="sort($event)">
+			<ng-template tdDataTableTemplate="roles" let-value="value" let-row="row" let-column="column">
+				<div layout="row">
+					{{ getRoles(row['roles']) }}
+				</div>
+			</ng-template>
+			<ng-template tdDataTableTemplate="lastLogin" let-value="value" let-row="row" let-column="column">
+				<div layout="row">
+					{{ row['lastLogin'].seconds * 1000 | date:'dd MMMM yyyy HH:mm' }}
+				</div>
+			</ng-template>
+			<ng-template tdDataTableTemplate="modifiedAt" let-value="value" let-row="row" let-column="column">
+				<div layout="row">
+					{{ row['modifiedAt'].seconds * 1000 | date:'dd MMMM yyyy HH:mm' }}
+				</div>
+			</ng-template>
+			<ng-template tdDataTableTemplate="createdAt" let-value="value" let-row="row" let-column="column">
+				<div layout="row">
+					{{ row['createdAt'].seconds * 1000 | date:'dd MMMM yyyy HH:mm' }}
+				</div>
+			</ng-template>
+			<!-- <ng-template tdDataTableTemplate="rechnungsstatus" let-value="value" let-row="row" let-column="column">
+				<div layout="row">
+					<mat-icon class="mag-icon-gray" [ngClass]="{
+						'icon-status-ausstehend': rechnungsstatus.Ausstehend === row['rechnungsstatus'],
+						'icon-status-bezahlt': rechnungsstatus.Bezahlt === row['rechnungsstatus']}">
+						check_circle
+					</mat-icon>
+				</div>
+			</ng-template>
+			<ng-template tdDataTableTemplate="mahnstatus" let-value="value" let-row="row" let-column="column">
+				<div layout="row">
+					<mat-icon class="mag-icon-gray" [ngClass]="{
+							'icon-mahn-stufe1': mahnstatus.Stufe1 === row['mahnstatus'],
+							'icon-mahn-stufe2': mahnstatus.Stufe2 === row['mahnstatus'],
+							'icon-mahn-stufe3': mahnstatus.Stufe3 === row['mahnstatus']}">
+						alarm
+					</mat-icon>
+				</div>
+			</ng-template> -->
+			<ng-template tdDataTableTemplate="aktion" let-value="value" let-row="row" let-column="column">
+				<div layout="row">
+					<!-- <a mat-button (click)="changeInvoiceStatus(row, 'rechnungsstatus')"
+						class="textstyled-button mat-primary">Status</a>
+					<a mat-button (click)="sendReminder(row, 'mahnstatus')"
+						class="textstyled-button mat-primary">Mahnen</a> -->
+					<!-- <a mat-button (click)="addComment(row, 'notiz')" class="textstyled-button mat-primary">Löschen</a> -->
+					<!-- <a mat-button (click)="addComment(row, 'notiz')" [class.mat-primary]="!row['notiz']" class="textstyled-button" >{{row['notiz'] || 'Notiz Erfassen'}}</a> -->
+
+					<!-- <a mat-button (click)="onEdit(row)" class="textstyled-button mat-primary">Benutzer Bearbeiten</a> -->
+					<button mat-icon-button color="primary" (click)="onEdit(row)">
+						<mat-icon>edit</mat-icon>
+					</button>
+				</div>
+			</ng-template>
+		</td-data-table>
+		<div class="md-padding" *ngIf="!dataTable.hasData" layout="row" layout-align="center center">
+			<h3>Keine Ergebnisse gefunden.</h3>
+		</div>
 	</mat-card-content>
+	<td-paging-bar #pagingBar [pageSize]="pageSize" [total]="filteredTotal" (change)="page($event)">
+		<span hide-xs>Zeilen pro Seite:</span>
+		<mat-select [style.width.px]="50" [(ngModel)]="pageSize">
+			<mat-option *ngFor="let size of [10,20,50,100]" [value]="size">
+				{{size}}
+			</mat-option>
+		</mat-select>
+		{{pagingBar.range}} <span hide-xs>von {{pagingBar.total}}</span>
+	</td-paging-bar>
 	<mat-divider></mat-divider>
 	<mat-card-actions>
-		<a mat-button color="primary" class="text-upper" [routerLink]="['/']">
-			<span>View More</span>
+		<button mat-icon-button color="primary" class="icon-button" (click)="navigateBack()">
+			<mat-icon>arrow_back</mat-icon>
+		</button>
+		<!-- <button mat-icon-button color="primary" class="icon-button" (click)="onCreate()">
+			<mat-icon>group_add</mat-icon>
+		</button>
+		<a mat-button color="primary" (click)="navigateBack()" class="text-upper">
+			Zurück
+		</a> -->
+		<a mat-button color="primary" (click)="onCreate()" class="text-upper">
+			Neuer Benutzer
 		</a>
 	</mat-card-actions>
 </mat-card>

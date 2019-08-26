@@ -1,12 +1,12 @@
+// tslint:disable:no-submodule-imports
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { User } from './../admin/user/user.model';
 
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
 import * as firebase from 'firebase/app';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs-compat';
 import { switchMap } from 'rxjs/operators';
 
 @Injectable()
@@ -16,12 +16,11 @@ export class AuthService {
 
 	constructor(
 		private afAuth: AngularFireAuth,
-		private afs: AngularFirestore,
-		private router: Router) {
+		private afs: AngularFirestore) {
 
 		// Get auth data, then get firestore user document || null
 		this.user = this.afAuth.authState
-			.switchMap(user => {
+			.switchMap((user: any) => {
 				if (user) {
 					console.log(user);
 					return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
@@ -44,14 +43,10 @@ export class AuthService {
 
 	private updateUserData(user: any) {
 		// Sets user data to firestore on login
-		const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-		const data: User = {
-			id: user.uid,
-			email: user.email,
-			displayName: user.displayName,
+		const userRef = this.afs.doc(`users/${user.uid}`);
+		const data = {
 			roles: { reader: true },
-			lastLogin: new Date(Date.now()),
-			modifiedAt: new Date(Date.now())
+			lastLogin: new Date(Date.now())
 		};
 
 		return userRef.set(data, { merge: true })

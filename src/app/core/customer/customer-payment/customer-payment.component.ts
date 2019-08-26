@@ -1,3 +1,4 @@
+// tslint:disable:no-submodule-imports
 import { DatePipe, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogConfig } from '@angular/material';
@@ -10,8 +11,8 @@ import {
 } from '@covalent/core/data-table';
 
 import { IPageChangeEvent } from '@covalent/core/paging';
-import { CustomerPaymentEditComponent } from "app/core/customer/customer-payment-edit/customer-payment-edit.component";
-import * as mock from 'faker';
+import { CustomerPaymentEditComponent } from 'app/core/customer/customer-payment-edit/customer-payment-edit.component';
+// import * as mock from 'faker';
 import { Guid } from 'guid-typescript';
 
 const DECIMAL_FORMAT: (v: any) => any = (v: number) => v.toFixed(2);
@@ -31,7 +32,7 @@ export enum Mahnstatus {
 	ServiceEingestellt = 'Service eingestellt'
 }
 
-export enum Intervall {
+export enum Zyklus {
 	Monatlich = 'Monatlich',
 	Halbjaehrlich = 'Halbjährlich',
 	Jaehrlich = 'Jährlich'
@@ -45,7 +46,7 @@ export interface Zahlung {
 	faelligkeit: Date;
 	betrag: number;
 	bezahltAm: Date;
-	intervall: Intervall;
+	intervall: Zyklus;
 	mahnstatus: Mahnstatus;
 	rechnungsstatus: Rechnungsstatus;
 	notiz: string;
@@ -61,7 +62,7 @@ const PAYMENT_DATA: Zahlung[] = [
 		faelligkeit: new Date('12/15/15, 8:00 PM'),
 		bezahltAm: new Date('12/15/17, 11:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Bezahlt,
-		intervall: Intervall.Jaehrlich,
+		intervall: Zyklus.Jaehrlich,
 		betrag: 375.50,
 		mahnstatus: Mahnstatus.NichtGemahnt,
 		notiz: '',
@@ -75,7 +76,7 @@ const PAYMENT_DATA: Zahlung[] = [
 		faelligkeit: new Date('09/15/14, 4:00 AM'),
 		bezahltAm: new Date('10/15/16, 2:00 AM'),
 		rechnungsstatus: Rechnungsstatus.NichtFaellig,
-		intervall: Intervall.Jaehrlich,
+		intervall: Zyklus.Jaehrlich,
 		betrag: 400.50,
 		mahnstatus: Mahnstatus.NichtGemahnt,
 		notiz: '',
@@ -89,7 +90,7 @@ const PAYMENT_DATA: Zahlung[] = [
 		faelligkeit: new Date('12/15/15, 8:00 PM'),
 		bezahltAm: new Date('12/15/17, 11:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Ausstehend,
-		intervall: Intervall.Monatlich,
+		intervall: Zyklus.Monatlich,
 		betrag: 98.50,
 		mahnstatus: Mahnstatus.Stufe2,
 		notiz: '',
@@ -98,12 +99,12 @@ const PAYMENT_DATA: Zahlung[] = [
 	{
 		id: Guid.create(),
 		vertrag: '83796',
-		rechnungsbeschreibung: 'Injection over Composition 1234567890 12345678901234567890',
+		rechnungsbeschreibung: 'Injection over Composition',
 		kunde: 'Gauda',
 		faelligkeit: new Date('1/18/11, 1:00 PM'),
 		bezahltAm: new Date('12/14/14, 5:00 AM'),
 		rechnungsstatus: Rechnungsstatus.Bezahlt,
-		intervall: Intervall.Monatlich,
+		intervall: Zyklus.Monatlich,
 		betrag: 112.50,
 		mahnstatus: Mahnstatus.NichtGemahnt,
 		notiz: '',
@@ -117,7 +118,7 @@ const PAYMENT_DATA: Zahlung[] = [
 		faelligkeit: new Date('3/4/10, 11:00 AM'),
 		bezahltAm: new Date('2/5/17, 7:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Ausstehend,
-		intervall: Intervall.Monatlich,
+		intervall: Zyklus.Monatlich,
 		betrag: 65.50,
 		mahnstatus: Mahnstatus.Stufe3,
 		notiz: '',
@@ -131,7 +132,7 @@ const PAYMENT_DATA: Zahlung[] = [
 		faelligkeit: new Date('3/4/10, 11:00 AM'),
 		bezahltAm: new Date('2/5/17, 7:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Ausstehend,
-		intervall: Intervall.Monatlich,
+		intervall: Zyklus.Monatlich,
 		betrag: 65.50,
 		mahnstatus: Mahnstatus.Stufe1,
 		notiz: '',
@@ -145,7 +146,7 @@ const PAYMENT_DATA: Zahlung[] = [
 		faelligkeit: new Date('3/4/10, 11:00 AM'),
 		bezahltAm: new Date('2/5/17, 7:00 PM'),
 		rechnungsstatus: Rechnungsstatus.NichtFaellig,
-		intervall: Intervall.Jaehrlich,
+		intervall: Zyklus.Jaehrlich,
 		betrag: 665.50,
 		mahnstatus: Mahnstatus.NichtGemahnt,
 		notiz: '',
@@ -159,7 +160,7 @@ const PAYMENT_DATA: Zahlung[] = [
 		faelligkeit: new Date('3/4/10, 11:00 AM'),
 		bezahltAm: new Date('2/5/17, 7:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Ausstehend,
-		intervall: Intervall.Halbjaehrlich,
+		intervall: Zyklus.Halbjaehrlich,
 		betrag: 235.50,
 		mahnstatus: Mahnstatus.Stufe1,
 		notiz: '',
@@ -173,7 +174,7 @@ const PAYMENT_DATA: Zahlung[] = [
 		faelligkeit: new Date('3/4/10, 11:00 AM'),
 		bezahltAm: new Date('2/5/17, 7:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Bezahlt,
-		intervall: Intervall.Jaehrlich,
+		intervall: Zyklus.Jaehrlich,
 		betrag: 465.50,
 		mahnstatus: Mahnstatus.NichtGemahnt,
 		notiz: '',
@@ -187,7 +188,7 @@ const PAYMENT_DATA: Zahlung[] = [
 		faelligkeit: new Date('3/4/10, 11:00 AM'),
 		bezahltAm: new Date('2/5/17, 7:00 PM'),
 		rechnungsstatus: Rechnungsstatus.Ausstehend,
-		intervall: Intervall.Halbjaehrlich,
+		intervall: Zyklus.Halbjaehrlich,
 		betrag: 188.90,
 		mahnstatus: Mahnstatus.Stufe1,
 		notiz: '',
@@ -207,15 +208,15 @@ export class CustomerPaymentComponent {
 		{ name: 'id', label: 'Id', hidden: true },
 		// { name: 'vertrag',  label: 'Vertrag', filter: true, sortable: true },
 		{ name: 'kunde', label: 'Kunde', filter: true, sortable: true },
-		{ name: 'rechnungsbeschreibung', label: 'Rechnung', width: 350 },
-		{ name: 'faelligkeit', label: 'Fälligkeit', format: DATE_FORMAT, width: 250 },
-		{ name: 'betrag', label: 'Betrag', filter: true, numeric: true, format: DECIMAL_FORMAT, width: 100 },
+		{ name: 'rechnungsbeschreibung', label: 'Rechnung' },
+		{ name: 'faelligkeit', label: 'Fälligkeit', format: DATE_FORMAT },
+		{ name: 'betrag', label: 'Betrag', filter: true, numeric: true, format: DECIMAL_FORMAT },
 		// { name: 'bezahltAm', label: 'BezahltAm', width: 170, format: DATE_FORMAT },
 		// { name: 'intervall', label: 'Intervall' },
-		{ name: 'mahnstatus', label: 'Mahnung', width: 80 },
-		{ name: 'rechnungsstatus', label: 'Status', width: 80 },
+		{ name: 'mahnstatus', label: 'Mahnung', hidden: true },
+		{ name: 'rechnungsstatus', label: 'Status' },
 		{ name: 'notiz', label: 'Notiz', hidden: true },
-		{ name: 'aktion', label: 'Aktion', filter: false, sortable: false, width: 250 },
+		{ name: 'aktion', label: 'Aktion', filter: false, sortable: false },
 	];
 
 	private mahnstatus = Mahnstatus;
@@ -244,8 +245,65 @@ export class CustomerPaymentComponent {
 	// 	this.filter();
 	// }
 
+	onEdit(row: Zahlung): void {
+		const dialogConfig = new MatDialogConfig();
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.width = '55%';
+		// dialogConfig.height = '55%';
+		dialogConfig.data = row;
+
+		const dialogRef = this.dialogService.open(CustomerPaymentEditComponent, dialogConfig);
+		dialogRef.beforeClose().subscribe(result => {
+			if (result) {
+				console.log('following updates were requested');
+				console.log(result);
+			} else {
+				console.log('nothing to update');
+			}
+		});
+	}
+
 	navigateBack() {
 		this.location.back();
+	}
+
+	sort(sortEvent: ITdDataTableSortChangeEvent): void {
+		this.sortBy = sortEvent.name;
+		this.sortOrder = sortEvent.order;
+		this.filter();
+	}
+
+	search(searchTerm: string): void {
+		this.searchTerm = searchTerm;
+		this.filter();
+		console.log(searchTerm);
+	}
+
+	page(pagingEvent: IPageChangeEvent): void {
+		this.fromRow = pagingEvent.fromRow;
+		this.currentPage = pagingEvent.page;
+		this.pageSize = pagingEvent.pageSize;
+		this.filter();
+	}
+
+	filter(): void {
+		let newData: any[] = this.data;
+		const excludedColumns: string[] = this.columns
+			.filter((column: ITdDataTableColumn) => {
+				return ((column.filter === undefined && column.hidden === true) ||
+					(column.filter !== undefined && column.filter === false));
+			}).map((column: ITdDataTableColumn) => {
+				return column.name;
+			});
+
+		newData = this.dataTableService.filterData(newData, this.searchTerm, true, excludedColumns);
+		this.filteredTotal = newData.length;
+
+		newData = this.dataTableService.sortData(newData, this.sortBy, this.sortOrder);
+		newData = this.dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
+
+		this.filteredData = newData;
 	}
 
 	// changeInvoiceStatus(row: any, name: string): void {
@@ -281,64 +339,8 @@ export class CustomerPaymentComponent {
 	// 	});
 	// }
 
-	sort(sortEvent: ITdDataTableSortChangeEvent): void {
-		this.sortBy = sortEvent.name;
-		this.sortOrder = sortEvent.order;
-		this.filter();
-	}
-
-	search(searchTerm: string): void {
-		this.searchTerm = searchTerm;
-		this.filter();
-		console.log(searchTerm);
-	}
-
-	page(pagingEvent: IPageChangeEvent): void {
-		this.fromRow = pagingEvent.fromRow;
-		this.currentPage = pagingEvent.page;
-		this.pageSize = pagingEvent.pageSize;
-		this.filter();
-	}
-
 	// onClick(event: any): void {
 	// 	const row: any = event.row;
 	// 	console.log(row);
 	// }
-
-	onEdit(row: Zahlung): void {
-		const dialogConfig = new MatDialogConfig();
-		dialogConfig.disableClose = true;
-		dialogConfig.autoFocus = true;
-		dialogConfig.width = '55%';
-		dialogConfig.data = row;
-
-		const dialogRef = this.dialogService.open(CustomerPaymentEditComponent, dialogConfig);
-		dialogRef.beforeClose().subscribe(result => {
-			if (result) {
-				console.log('following updates were requested');
-				console.log(result);
-			} else {
-				console.log('nothing to update');
-			}
-		});
-	}
-
-	filter(): void {
-		let newData: any[] = this.data;
-		const excludedColumns: string[] = this.columns
-			.filter((column: ITdDataTableColumn) => {
-				return ((column.filter === undefined && column.hidden === true) ||
-					(column.filter !== undefined && column.filter === false));
-			}).map((column: ITdDataTableColumn) => {
-				return column.name;
-			});
-
-		newData = this.dataTableService.filterData(newData, this.searchTerm, true, excludedColumns);
-		this.filteredTotal = newData.length;
-
-		newData = this.dataTableService.sortData(newData, this.sortBy, this.sortOrder);
-		newData = this.dataTableService.pageData(newData, this.fromRow, this.currentPage * this.pageSize);
-
-		this.filteredData = newData;
-	}
 }

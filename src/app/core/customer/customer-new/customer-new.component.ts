@@ -9,7 +9,7 @@ export class CustomerNewComponent implements OnInit {
 
 	constructor() { }
 
-	routes: Object[] = [{
+	routes: object[] = [{
 		icon: 'dashboard',
 		route: '.',
 		title: 'Dashboard',
@@ -23,8 +23,8 @@ export class CustomerNewComponent implements OnInit {
 		title: 'Console',
 	}];
 
-	user: any
-	states: string[] = ['Bern', 'Zürich']
+	user: any;
+	states: string[] = ['Bern', 'Zürich'];
 
 	ngOnInit() {
 		this.user = {

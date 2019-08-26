@@ -1,6 +1,7 @@
+// tslint:disable:no-submodule-imports
 import { DatePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
@@ -9,7 +10,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 	styleUrls: ['./customer-payment-edit.component.scss']
 })
 export class CustomerPaymentEditComponent implements OnInit {
-
 	constructor(
 		private dialogRef: MatDialogRef<CustomerPaymentEditComponent>,
 		private fb: FormBuilder,

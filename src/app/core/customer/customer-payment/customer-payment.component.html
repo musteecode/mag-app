@@ -25,14 +25,29 @@
 			</ng-template>
 			<ng-template tdDataTableTemplate="rechnungsstatus" let-value="value" let-row="row" let-column="column">
 				<div layout="row">
+					<mat-icon class="icon-status-ausstehend"
+						*ngIf="rechnungsstatus.Ausstehend === row['rechnungsstatus']">
+						remove_circle
+					</mat-icon>
+					<mat-icon class="icon-status-bezahlt" *ngIf="rechnungsstatus.Ausstehend != row['rechnungsstatus']">
+						brightness_1
+					</mat-icon>
+					<!-- <mat-icon class="mag-icon-gray" [ngClass]="{
+						'icon-status-ausstehend': rechnungsstatus.Ausstehend === row['rechnungsstatus']}">
+						remove_circle_outline
+					</mat-icon> -->
+				</div>
+			</ng-template>
+			<!-- <ng-template tdDataTableTemplate="rechnungsstatus" let-value="value" let-row="row" let-column="column">
+				<div layout="row">
 					<mat-icon class="mag-icon-gray" [ngClass]="{
 						'icon-status-ausstehend': rechnungsstatus.Ausstehend === row['rechnungsstatus'],
 						'icon-status-bezahlt': rechnungsstatus.Bezahlt === row['rechnungsstatus']}">
 						check_circle
 					</mat-icon>
 				</div>
-			</ng-template>
-			<ng-template tdDataTableTemplate="mahnstatus" let-value="value" let-row="row" let-column="column">
+			</ng-template> -->
+			<!-- <ng-template tdDataTableTemplate="mahnstatus" let-value="value" let-row="row" let-column="column">
 				<div layout="row">
 					<mat-icon class="mag-icon-gray" [ngClass]="{
 							'icon-mahn-stufe1': mahnstatus.Stufe1 === row['mahnstatus'],
@@ -41,16 +56,20 @@
 						alarm
 					</mat-icon>
 				</div>
-			</ng-template>
+			</ng-template> -->
 			<ng-template tdDataTableTemplate="aktion" let-value="value" let-row="row" let-column="column">
 				<div layout="row">
 					<!-- <a mat-button (click)="changeInvoiceStatus(row, 'rechnungsstatus')"
 						class="textstyled-button mat-primary">Status</a>
 					<a mat-button (click)="sendReminder(row, 'mahnstatus')"
 						class="textstyled-button mat-primary">Mahnen</a> -->
-					<a mat-button (click)="onEdit(row)" class="textstyled-button mat-primary">Zahlung Bearbeiten</a>
 					<!-- <a mat-button (click)="addComment(row, 'notiz')" class="textstyled-button mat-primary">Löschen</a> -->
 					<!-- <a mat-button (click)="addComment(row, 'notiz')" [class.mat-primary]="!row['notiz']" class="textstyled-button" >{{row['notiz'] || 'Notiz Erfassen'}}</a> -->
+
+					<!-- <a mat-button (click)="onEdit(row)" class="textstyled-button mat-primary">Zahlung Bearbeiten</a> -->
+					<button mat-icon-button color="primary" (click)="onEdit(row)">
+						<mat-icon>edit</mat-icon>
+					</button>
 				</div>
 			</ng-template>
 		</td-data-table>
@@ -69,8 +88,8 @@
 	</td-paging-bar>
 	<mat-divider></mat-divider>
 	<mat-card-actions>
-		<a mat-button color="primary" class="text-upper" (click)="navigateBack()">
-			<span>Zurück</span>
-		</a>
+		<button mat-icon-button color="primary" class="icon-button" (click)="navigateBack()">
+			<mat-icon>arrow_back</mat-icon>
+		</button>
 	</mat-card-actions>
 </mat-card>
