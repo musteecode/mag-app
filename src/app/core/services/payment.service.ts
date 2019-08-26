@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
-import { Observable } from 'rxjs-compat';
+import { Observable, of as observableOf } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 interface Zahlung {
